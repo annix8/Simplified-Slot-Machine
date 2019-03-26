@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace SlotMachine.Core
 {
-    public class SimpleSlotMachine
+    internal class SimpleSlotMachine
     {
         private const int Rows = 4;
         private const int NumberOfSymbolsOnARow = 3;
@@ -27,7 +27,15 @@ namespace SlotMachine.Core
         }
 
         // TODO: remove calls to Console and implement reader and writers
-        public void RequestStake()
+        public void RunMachineLoop()
+        {
+            while(_player.Balance > 0)
+            {
+                RequestStake();
+            }
+        }
+
+        private void RequestStake()
         {
             Console.WriteLine("Enter stake amount:");
             bool isNumber = decimal.TryParse(Console.ReadLine(), out decimal stakeAmount);

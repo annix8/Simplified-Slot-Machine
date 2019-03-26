@@ -1,6 +1,4 @@
 ﻿using SlotMachine.Core;
-using SlotMachine.Core.Models;
-using System;
 
 namespace SlotMachine.Console
 {
@@ -8,7 +6,7 @@ namespace SlotMachine.Console
     {
         static void Main(string[] args)
         {
-            //new SimpleSlotMachine(new Player(), new RandomSymbolGenerator(new Random())).Spin();
+            new GameController().RunGameLoop();
         }
     }
 }
