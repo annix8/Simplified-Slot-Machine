@@ -1,6 +1,6 @@
 ﻿namespace SlotMachine.Core.Models.Symbols
 {
-    public class Pear : Symbol
+    public class Pineaple : Symbol
     {
         public override char Sign => 'P';
         public override double Coefficient => 0.8;

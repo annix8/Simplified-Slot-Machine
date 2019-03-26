@@ -8,7 +8,7 @@ namespace SlotMachine.Console
     {
         static void Main(string[] args)
         {
-            new SimpleSlotMachine(new Player(), new RandomSymbolGenerator(new Random())).Spin();
+            //new SimpleSlotMachine(new Player(), new RandomSymbolGenerator(new Random())).Spin();
         }
     }
 }

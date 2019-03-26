@@ -1,5 +1,9 @@
 ﻿using SlotMachine.Core.Models;
 using SlotMachine.Core.Models.Symbols;
+using SlotMachine.Core.Services;
+using SlotMachine.Core.Services.Coefficient;
+using SlotMachine.Core.Services.Coefficient.Factory;
+using System;
 using System.Collections.Generic;
 
 namespace SlotMachine.Core
@@ -8,31 +12,63 @@ namespace SlotMachine.Core
     {
         private const int Rows = 4;
         private const int NumberOfSymbolsOnARow = 3;
+
         private readonly Player _player;
         private readonly RandomSymbolGenerator _randomSymbolGenerator;
+        private readonly SymbolCoefficientProviderFactory _symbolCoefficientProviderFactory;
 
         public SimpleSlotMachine(Player player,
-            RandomSymbolGenerator randomSymbolGenerator)
+            RandomSymbolGenerator randomSymbolGenerator,
+            SymbolCoefficientProviderFactory symbolCoefficientProviderFactory)
         {
             _player = player;
             _randomSymbolGenerator = randomSymbolGenerator;
+            _symbolCoefficientProviderFactory = symbolCoefficientProviderFactory;
         }
 
-        public void Spin()
+        // TODO: remove calls to Console and implement reader and writers
+        public void RequestStake()
         {
+            Console.WriteLine("Enter stake amount:");
+            bool isNumber = decimal.TryParse(Console.ReadLine(), out decimal stakeAmount);
+            if (!isNumber)
+            {
+                // error
+            }
+
+            if (_player.Balance < stakeAmount)
+            {
+                // error
+            }
+
+            _player.Balance -= stakeAmount;
+
+            Spin(stakeAmount);
+
+            Console.WriteLine($"Current balance is: {_player.Balance}");
+
+            if (_player.Balance == 0)
+            {
+                // end game
+            }
+        }
+
+        private void Spin(decimal stakeAmount)
+        {
+            double coefficient = 0;
+            SymbolCoefficientProvider symbolCoefficientProvider = _symbolCoefficientProviderFactory.Create();
             for (int i = 0; i < Rows; i++)
             {
                 List<Symbol> symbols = _randomSymbolGenerator.Generate(NumberOfSymbolsOnARow);
-                System.Console.WriteLine(string.Join(", ", symbols));
-            }
-            // generate random symbols
-            // perform checks and get coefficient
-            // multiply by stake
-        }
+                Console.WriteLine(string.Join(", ", symbols));
 
-        private decimal AskForStake()
-        {
-            return 0;
+                coefficient += symbolCoefficientProvider.GetCoefficient(symbols);
+            }
+
+            decimal winAmount = (decimal)coefficient * stakeAmount;
+            _player.Balance += winAmount;
+
+            Console.WriteLine($"You have won: {winAmount}");
         }
     }
 }

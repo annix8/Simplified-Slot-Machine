@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SlotMachine.Core
+namespace SlotMachine.Core.Services
 {
     public class RandomSymbolGenerator
     {
@@ -56,7 +56,7 @@ namespace SlotMachine.Core
             {
                 new Apple(),
                 new Banana(),
-                new Pear(),
+                new Pineaple(),
                 new Wildcard()
             };
             _symbols = _symbols
