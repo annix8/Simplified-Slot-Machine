@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SlotMachine.Core;
+using SlotMachine.Core.Models;
+using System;
 
 namespace SlotMachine.Console
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
+            new SimpleSlotMachine(new Player(), new RandomSymbolGenerator(new Random())).Spin();
         }
     }
 }

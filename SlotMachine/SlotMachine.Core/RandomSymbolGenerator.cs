@@ -7,6 +7,9 @@ namespace SlotMachine.Core
 {
     public class RandomSymbolGenerator
     {
+        private const int MinRandomValue = 1;
+        private const int MaxRandomValue = 101;
+
         private readonly Random _random;
         private List<Symbol> _symbols;
 
@@ -30,7 +33,7 @@ namespace SlotMachine.Core
 
         private Symbol GetRandomSymbol()
         {
-            double randomNumber = _random.NextDouble();
+            double randomNumber = _random.Next(MinRandomValue, MaxRandomValue);
 
             double cumulative = 0.0;
             for (int i = 0; i < _symbols.Count; i++)

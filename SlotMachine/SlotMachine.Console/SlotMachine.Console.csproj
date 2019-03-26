@@ -49,5 +49,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SlotMachine.Core\SlotMachine.Core.csproj">
+      <Project>{9FEE1D09-0FD2-4087-B331-B2C56076FCF1}</Project>
+      <Name>SlotMachine.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
