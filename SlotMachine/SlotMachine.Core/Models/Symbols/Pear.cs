@@ -2,10 +2,8 @@
 {
     public class Pear : Symbol
     {
-        public override char Sign => throw new System.NotImplementedException();
-
-        public override double Coefficient => throw new System.NotImplementedException();
-
-        public override int Probability => throw new System.NotImplementedException();
+        public override char Sign => 'P';
+        public override double Coefficient => 0.8;
+        public override int Probability => 15;
     }
 }

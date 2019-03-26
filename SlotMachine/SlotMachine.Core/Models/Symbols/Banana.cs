@@ -2,10 +2,8 @@
 {
     public class Banana : Symbol
     {
-        public override char Sign => throw new System.NotImplementedException();
-
-        public override double Coefficient => throw new System.NotImplementedException();
-
-        public override int Probability => throw new System.NotImplementedException();
+        public override char Sign => 'B';
+        public override double Coefficient => 0.6;
+        public override int Probability => 35;
     }
 }
