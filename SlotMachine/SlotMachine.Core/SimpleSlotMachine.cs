@@ -54,11 +54,6 @@ namespace SlotMachine.Core
             Spin(stakeAmount);
 
             Console.WriteLine($"Current balance is: {_player.Balance}");
-
-            if (_player.Balance == 0)
-            {
-                // end game
-            }
         }
 
         private void Spin(decimal stakeAmount)
