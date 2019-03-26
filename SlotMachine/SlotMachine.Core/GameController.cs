@@ -2,8 +2,6 @@
 using SlotMachine.Core.Services;
 using SlotMachine.Core.Services.Coefficient.Factory;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SlotMachine.Core
 {
@@ -11,11 +9,14 @@ namespace SlotMachine.Core
     {
         public void RunGameLoop()
         {
-            while (true)
+            bool startNewGame = true;
+            while (startNewGame)
             {
                 decimal deposit = RequestPlayerDeposit();
                 Player player = CreatePlayer(deposit);
                 SimpleSlotMachine slotMachine = CreateSlotMachine(player);
+                slotMachine.RunMachineLoop();
+                startNewGame = AskForNewGame();
             }
         }
 
@@ -48,6 +49,14 @@ namespace SlotMachine.Core
                 player,
                 new RandomSymbolGenerator(new Random()),
                 new SymbolCoefficientProviderFactory());
+        }
+
+        private bool AskForNewGame()
+        {
+            Console.WriteLine("Your balance is 0. Would you like to insert more to play again? Y/N");
+            string result = Console.ReadLine().ToLower();
+
+            return result == "y";
         }
     }
 }
