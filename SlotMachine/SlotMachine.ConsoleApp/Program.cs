@@ -1,48 +1,63 @@
-﻿using SlotMachine.Core;
+﻿using SlotMachine.ConsoleApp.IO;
+using SlotMachine.ConsoleApp.IO.Contracts;
+using SlotMachine.Core;
 using SlotMachine.Core.Models.Dto;
 using SlotMachine.Core.Models.Symbols;
-using System;
 using System.Collections.Generic;
 
 namespace SlotMachine.ConsoleApp
 {
     class Program
     {
+        private static IReader _reader;
+        private static IWriter _writer;
+        private static GameController _gameController;
+        private static PlayerInputRequester _playerInputRequester;
+
+        private static bool _runNewGame = true;
+
         static void Main(string[] args)
         {
-            GameController gameController = CreateGameController();
-            bool runNewGame = true;
-            while (runNewGame)
+            Initialize();
+            while (_runNewGame)
             {
-                decimal stake = RequestStake();
-                SlotMachineSpinResultDto result = gameController.SpinMachine(stake);
+                decimal stake = _playerInputRequester.RequestStake();
+                SlotMachineSpinResultDto result = _gameController.SpinMachine(stake);
 
                 if (!result.IsSuccess)
                 {
-                    Console.WriteLine(result.ResultMessage);
+                    _writer.WriteLine(result.ResultMessage);
                     continue;
                 }
 
                 DrawSymbols(result.Symbols);
-                Console.WriteLine($"You have won: {result.WinAmount:f1}");
-                Console.WriteLine($"Current balance is: {result.PlayerBalance:f1}");
+                _writer.WriteLine($"You have won: {result.WinAmount:f1}");
+                _writer.WriteLine($"Current balance is: {result.PlayerBalance:f1}");
 
-                if (!gameController.PlayerCanPlay())
+                if (!_gameController.PlayerCanPlay())
                 {
-                    runNewGame = AskForNewGame();
+                    _runNewGame = _playerInputRequester.AskForNewGame();
 
-                    if (runNewGame)
+                    if (_runNewGame)
                     {
-                        gameController = CreateGameController();
+                        _gameController = CreateGameController();
                     }
                 }
             }
         }
 
+        private static void Initialize()
+        {
+            _reader = new ConsoleReader();
+            _writer = new ConsoleWriter();
+            _playerInputRequester = new PlayerInputRequester(_reader, _writer);
+            _gameController = CreateGameController();
+        }
+
         private static GameController CreateGameController()
         {
             var gameController = new GameController();
-            decimal deposit = RequestPlayerDeposit();
+            decimal deposit = _playerInputRequester.RequestPlayerDeposit();
             gameController.CreateNewGame(deposit);
 
             return gameController;
@@ -52,49 +67,8 @@ namespace SlotMachine.ConsoleApp
         {
             foreach (var rowOfSymbols in rowsOfSymbols)
             {
-                Console.WriteLine(string.Join(", ", rowOfSymbols));
+                _writer.WriteLine(string.Join(", ", rowOfSymbols));
             }
-        }
-
-        private static decimal RequestPlayerDeposit()
-        {
-            Console.WriteLine("Please deposit money you would like to play with:");
-            bool isMoney = decimal.TryParse(Console.ReadLine(), out decimal money);
-
-            while (!isMoney || money <= 0)
-            {
-                Console.WriteLine("Please enter a valid positive number");
-                isMoney = decimal.TryParse(Console.ReadLine(), out money);
-            }
-
-            return money;
-        }
-
-        private static decimal RequestStake()
-        {
-            Console.WriteLine("Enter stake amount:");
-            bool isNumber = decimal.TryParse(Console.ReadLine(), out decimal stakeAmount);
-            while (!isNumber || stakeAmount <= 0)
-            {
-                Console.WriteLine("Please enter a valid number for stake amount that is bigger than 0");
-                isNumber = decimal.TryParse(Console.ReadLine(), out stakeAmount);
-            }
-
-            return stakeAmount;
-        }
-
-        private static bool AskForNewGame()
-        {
-            Console.WriteLine("Your balance is 0. Would you like to insert more to play again? Y/N");
-            string result = Console.ReadLine().ToLower();
-
-            while(result != "y" && result != "n")
-            {
-                Console.WriteLine("Your balance is 0. Would you like to insert more to play again? Y/N");
-                result = Console.ReadLine().ToLower();
-            }
-
-            return result == "y";
         }
     }
 }
