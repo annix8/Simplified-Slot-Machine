@@ -29,7 +29,7 @@ namespace SlotMachine.Core
 
         public SlotMachineSpinResultDto SpinMachine(decimal stakeAmount)
         {
-            if (_player.Balance < stakeAmount)
+            if (_player.Balance <= 0 || _player.Balance < stakeAmount)
             {
                 return new SlotMachineSpinResultDto()
                 {
