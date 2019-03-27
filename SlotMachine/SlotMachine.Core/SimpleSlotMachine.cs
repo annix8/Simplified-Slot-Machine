@@ -4,7 +4,6 @@ using SlotMachine.Core.Models.Symbols;
 using SlotMachine.Core.Services;
 using SlotMachine.Core.Services.Coefficient;
 using SlotMachine.Core.Services.Coefficient.Factory;
-using System;
 using System.Collections.Generic;
 
 namespace SlotMachine.Core
@@ -36,15 +35,11 @@ namespace SlotMachine.Core
             {
                 List<Symbol> symbols = _randomSymbolGenerator.Generate(NumberOfSymbolsOnARow);
                 rowsOfSymbols.Add(symbols);
-                Console.WriteLine(string.Join(", ", symbols));
-
                 coefficient += symbolCoefficientProvider.GetCoefficient(symbols);
             }
 
             decimal winAmount = (decimal)coefficient * stakeAmount;
             _player.Balance += winAmount;
-
-            Console.WriteLine($"You have won: {winAmount}");
 
             return new SlotMachineSpinResultDto
             {
