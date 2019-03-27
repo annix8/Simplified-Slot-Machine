@@ -44,8 +44,8 @@ namespace SlotMachine.ConsoleApp
                 }
 
                 DrawSymbols(result.Symbols);
-                _writer.WriteLine($"You have won: {result.WinAmount:f1}");
-                _writer.WriteLine($"Current balance is: {result.PlayerBalance:f1}");
+                _writer.WriteLine($"You have won: {result.WinAmount:f2}");
+                _writer.WriteLine($"Current balance is: {result.PlayerBalance:f2}");
 
                 if (!_gameController.PlayerCanPlay())
                 {
