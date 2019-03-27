@@ -25,9 +25,10 @@ namespace SlotMachine.Core
             Console.WriteLine("Please deposit money you would like to play with:");
             bool isMoney = decimal.TryParse(Console.ReadLine(), out decimal money);
 
-            if (!isMoney)
+            while (!isMoney || money <= 0)
             {
-                // error
+                Console.WriteLine("Please enter a valid positive number");
+                isMoney = decimal.TryParse(Console.ReadLine(), out money);
             }
 
             return money;
