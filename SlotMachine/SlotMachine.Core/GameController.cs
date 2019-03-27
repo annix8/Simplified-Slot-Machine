@@ -44,6 +44,11 @@ namespace SlotMachine.Core
             return spinResult;
         }
 
+        public bool PlayerCanPlay()
+        {
+            return _player.Balance > 0;
+        }
+
         private SimpleSlotMachine CreateSlotMachine(Player player)
         {
             return new SimpleSlotMachine(

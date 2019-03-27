@@ -17,7 +17,7 @@ namespace SlotMachine.ConsoleApp
             decimal deposit = RequestPlayerDeposit();
             gameController.CreateNewGame(deposit);
 
-            while (true)
+            while (gameController.PlayerCanPlay())
             {
                 decimal stake = RequestStake();
                 SlotMachineSpinResultDto result = gameController.SpinMachine(stake);
