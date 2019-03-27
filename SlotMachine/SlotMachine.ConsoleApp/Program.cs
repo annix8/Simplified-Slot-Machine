@@ -19,6 +19,19 @@ namespace SlotMachine.ConsoleApp
         static void Main(string[] args)
         {
             Initialize();
+            RunGameLoop();
+        }
+
+        private static void Initialize()
+        {
+            _reader = new ConsoleReader();
+            _writer = new ConsoleWriter();
+            _playerInputRequester = new PlayerInputRequester(_reader, _writer);
+            _gameController = CreateGameController();
+        }
+
+        private static void RunGameLoop()
+        {
             while (_runNewGame)
             {
                 decimal stake = _playerInputRequester.RequestStake();
@@ -44,14 +57,6 @@ namespace SlotMachine.ConsoleApp
                     }
                 }
             }
-        }
-
-        private static void Initialize()
-        {
-            _reader = new ConsoleReader();
-            _writer = new ConsoleWriter();
-            _playerInputRequester = new PlayerInputRequester(_reader, _writer);
-            _gameController = CreateGameController();
         }
 
         private static GameController CreateGameController()
