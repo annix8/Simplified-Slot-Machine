@@ -39,14 +39,17 @@ namespace SlotMachine.Core
         {
             Console.WriteLine("Enter stake amount:");
             bool isNumber = decimal.TryParse(Console.ReadLine(), out decimal stakeAmount);
-            if (!isNumber)
+            while (!isNumber || stakeAmount <= 0)
             {
-                // error
+                Console.WriteLine("Please enter a valid number for stake amount that is bigger than 0");
+                isNumber = decimal.TryParse(Console.ReadLine(), out stakeAmount);
             }
 
             if (_player.Balance < stakeAmount)
             {
-                // error
+                Console.WriteLine("You don't have enough balance.");
+                RequestStake();
+                return;
             }
 
             _player.Balance -= stakeAmount;
