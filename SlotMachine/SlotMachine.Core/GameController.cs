@@ -8,6 +8,8 @@ namespace SlotMachine.Core
 {
     public class GameController
     {
+        private const string InsufficientBalanceMessage = "Insufficient balance";
+
         private SimpleSlotMachine _slotMachine;
         private Player _player;
 
@@ -34,7 +36,7 @@ namespace SlotMachine.Core
                 return new SlotMachineSpinResultDto()
                 {
                     IsSuccess = false,
-                    ResultMessage = "Insufficient balance"
+                    ResultMessage = InsufficientBalanceMessage
                 };
             }
 
