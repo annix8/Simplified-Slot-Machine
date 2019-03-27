@@ -1,4 +1,5 @@
 ﻿using SlotMachine.Core;
+using SlotMachine.Core.Models.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,20 +15,18 @@ namespace SlotMachine.ConsoleApp
             var gameController = new GameController();
             decimal deposit = RequestPlayerDeposit();
             gameController.CreateNewGame(deposit);
-        }
 
-        //public void RunGameLoop()
-        //{
-        //    bool startNewGame = true;
-        //    while (startNewGame)
-        //    {
-        //        decimal deposit = RequestPlayerDeposit();
-        //        Player player = CreatePlayer(deposit);
-        //        SimpleSlotMachine slotMachine = CreateSlotMachine(player);
-        //        slotMachine.RunMachineLoop();
-        //        startNewGame = AskForNewGame();
-        //    }
-        //}
+            while (true)
+            {
+                decimal stake = RequestStake();
+                SlotMachineSpinResultDto result = gameController.SpinMachine(stake);
+
+                if (!result.IsSuccess)
+                {
+                    Console.WriteLine(result.ResultMessage);
+                }
+            }
+        }
 
         private static decimal RequestPlayerDeposit()
         {
