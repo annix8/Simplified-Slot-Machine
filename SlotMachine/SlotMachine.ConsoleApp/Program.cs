@@ -3,9 +3,6 @@ using SlotMachine.Core.Models.Dto;
 using SlotMachine.Core.Models.Symbols;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SlotMachine.ConsoleApp
 {
@@ -13,11 +10,9 @@ namespace SlotMachine.ConsoleApp
     {
         static void Main(string[] args)
         {
-            var gameController = new GameController();
-            decimal deposit = RequestPlayerDeposit();
-            gameController.CreateNewGame(deposit);
-
-            while (gameController.PlayerCanPlay())
+            GameController gameController = CreateGameController();
+            bool runNewGame = true;
+            while (runNewGame)
             {
                 decimal stake = RequestStake();
                 SlotMachineSpinResultDto result = gameController.SpinMachine(stake);
@@ -31,7 +26,26 @@ namespace SlotMachine.ConsoleApp
                 DrawSymbols(result.Symbols);
                 Console.WriteLine($"You have won: {result.WinAmount:f1}");
                 Console.WriteLine($"Current balance is: {result.PlayerBalance:f1}");
+
+                if (!gameController.PlayerCanPlay())
+                {
+                    runNewGame = AskForNewGame();
+
+                    if (runNewGame)
+                    {
+                        gameController = CreateGameController();
+                    }
+                }
             }
+        }
+
+        private static GameController CreateGameController()
+        {
+            var gameController = new GameController();
+            decimal deposit = RequestPlayerDeposit();
+            gameController.CreateNewGame(deposit);
+
+            return gameController;
         }
 
         private static void DrawSymbols(List<List<Symbol>> rowsOfSymbols)
@@ -73,6 +87,12 @@ namespace SlotMachine.ConsoleApp
         {
             Console.WriteLine("Your balance is 0. Would you like to insert more to play again? Y/N");
             string result = Console.ReadLine().ToLower();
+
+            while(result != "y" && result != "n")
+            {
+                Console.WriteLine("Your balance is 0. Would you like to insert more to play again? Y/N");
+                result = Console.ReadLine().ToLower();
+            }
 
             return result == "y";
         }
