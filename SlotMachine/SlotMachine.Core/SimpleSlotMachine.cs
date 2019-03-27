@@ -27,39 +27,6 @@ namespace SlotMachine.Core
             _symbolCoefficientProviderFactory = symbolCoefficientProviderFactory;
         }
 
-        // TODO: remove calls to Console and implement reader and writers
-        public void RunMachineLoop()
-        {
-            while(_player.Balance > 0)
-            {
-                RequestStake();
-            }
-        }
-
-        private void RequestStake()
-        {
-            Console.WriteLine("Enter stake amount:");
-            bool isNumber = decimal.TryParse(Console.ReadLine(), out decimal stakeAmount);
-            while (!isNumber || stakeAmount <= 0)
-            {
-                Console.WriteLine("Please enter a valid number for stake amount that is bigger than 0");
-                isNumber = decimal.TryParse(Console.ReadLine(), out stakeAmount);
-            }
-
-            if (_player.Balance < stakeAmount)
-            {
-                Console.WriteLine("You don't have enough balance.");
-                RequestStake();
-                return;
-            }
-
-            _player.Balance -= stakeAmount;
-
-            Spin(stakeAmount);
-
-            Console.WriteLine($"Current balance is: {_player.Balance}");
-        }
-
         public SlotMachineSpinResultDto Spin(decimal stakeAmount)
         {
             var rowsOfSymbols = new List<List<Symbol>>();
