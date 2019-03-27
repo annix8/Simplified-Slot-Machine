@@ -1,4 +1,5 @@
 ﻿using SlotMachine.Core.Models;
+using SlotMachine.Core.Models.Dto;
 using SlotMachine.Core.Models.Symbols;
 using SlotMachine.Core.Services;
 using SlotMachine.Core.Services.Coefficient;
@@ -59,13 +60,15 @@ namespace SlotMachine.Core
             Console.WriteLine($"Current balance is: {_player.Balance}");
         }
 
-        private void Spin(decimal stakeAmount)
+        public SlotMachineSpinResultDto Spin(decimal stakeAmount)
         {
+            var rowsOfSymbols = new List<List<Symbol>>();
             double coefficient = 0;
             SymbolCoefficientProvider symbolCoefficientProvider = _symbolCoefficientProviderFactory.Create();
             for (int i = 0; i < Rows; i++)
             {
                 List<Symbol> symbols = _randomSymbolGenerator.Generate(NumberOfSymbolsOnARow);
+                rowsOfSymbols.Add(symbols);
                 Console.WriteLine(string.Join(", ", symbols));
 
                 coefficient += symbolCoefficientProvider.GetCoefficient(symbols);
@@ -75,6 +78,13 @@ namespace SlotMachine.Core
             _player.Balance += winAmount;
 
             Console.WriteLine($"You have won: {winAmount}");
+
+            return new SlotMachineSpinResultDto
+            {
+                PlayerBalance = _player.Balance,
+                Symbols = rowsOfSymbols,
+                WinAmount = winAmount
+            };
         }
     }
 }
