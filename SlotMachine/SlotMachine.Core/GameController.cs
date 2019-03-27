@@ -38,6 +38,7 @@ namespace SlotMachine.Core
                 };
             }
 
+            _player.Balance -= stakeAmount;
             SlotMachineSpinResultDto spinResult = _slotMachine.Spin(stakeAmount);
 
             return spinResult;

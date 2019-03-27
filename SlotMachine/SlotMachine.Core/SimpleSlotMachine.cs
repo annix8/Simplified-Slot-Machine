@@ -45,7 +45,8 @@ namespace SlotMachine.Core
             {
                 PlayerBalance = _player.Balance,
                 Symbols = rowsOfSymbols,
-                WinAmount = winAmount
+                WinAmount = winAmount,
+                IsSuccess = true
             };
         }
     }

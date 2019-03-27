@@ -1,5 +1,6 @@
 ﻿using SlotMachine.Core;
 using SlotMachine.Core.Models.Dto;
+using SlotMachine.Core.Models.Symbols;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,20 @@ namespace SlotMachine.ConsoleApp
                 if (!result.IsSuccess)
                 {
                     Console.WriteLine(result.ResultMessage);
+                    continue;
                 }
+
+                DrawSymbols(result.Symbols);
+                Console.WriteLine($"You have won: {result.WinAmount:f1}");
+                Console.WriteLine($"Current balance is: {result.PlayerBalance:f1}");
+            }
+        }
+
+        private static void DrawSymbols(List<List<Symbol>> rowsOfSymbols)
+        {
+            foreach (var rowOfSymbols in rowsOfSymbols)
+            {
+                Console.WriteLine(string.Join(", ", rowOfSymbols));
             }
         }
 
