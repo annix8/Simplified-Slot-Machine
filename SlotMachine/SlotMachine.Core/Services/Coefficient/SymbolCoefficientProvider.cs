@@ -20,7 +20,7 @@ namespace SlotMachine.Core.Services.Coefficient
 
             foreach (var symbol in symbols)
             {
-                if (symbol.GetType() ==  GetSymbolType() || symbol is Wildcard)
+                if (symbol.GetType() == GetSymbolType() || symbol is Wildcard)
                 {
                     countOfSameItems++;
                     coefficient += symbol.Coefficient;
@@ -32,7 +32,12 @@ namespace SlotMachine.Core.Services.Coefficient
                 return coefficient;
             }
 
-            return _successor.GetCoefficient(symbols);
+            if (_successor != null)
+            {
+                return _successor.GetCoefficient(symbols);
+            }
+
+            return 0;
         }
 
         protected abstract Type GetSymbolType();
