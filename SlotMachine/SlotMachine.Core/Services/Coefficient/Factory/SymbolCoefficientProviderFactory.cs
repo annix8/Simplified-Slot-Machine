@@ -3,7 +3,7 @@ using SlotMachine.Core.Services.Coefficient.Factory.Contracts;
 
 namespace SlotMachine.Core.Services.Coefficient.Factory
 {
-    public class SymbolCoefficientProviderFactory : ISymbolCoefficientProviderFactory
+    internal class SymbolCoefficientProviderFactory : ISymbolCoefficientProviderFactory
     {
         public ISymbolCoefficientProvider Create()
         {

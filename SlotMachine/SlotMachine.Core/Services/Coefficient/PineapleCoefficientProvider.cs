@@ -3,7 +3,7 @@ using System;
 
 namespace SlotMachine.Core.Services.Coefficient
 {
-    public class PineapleCoefficientProvider : SymbolCoefficientProvider
+    internal class PineapleCoefficientProvider : SymbolCoefficientProvider
     {
         protected override Type GetSymbolType()
         {

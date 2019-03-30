@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace SlotMachine.Core.Services.Coefficient
 {
-    public abstract class SymbolCoefficientProvider : ISymbolCoefficientProvider
+    internal abstract class SymbolCoefficientProvider : ISymbolCoefficientProvider
     {
         protected ISymbolCoefficientProvider _successor;
 

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace SlotMachine.Core.Services
 {
-    public class RandomSymbolGenerator : IRandomSymbolGenerator
+    internal class RandomSymbolGenerator : IRandomSymbolGenerator
     {
         private const int MinRandomValue = 1;
         private const int MaxRandomValue = 101;

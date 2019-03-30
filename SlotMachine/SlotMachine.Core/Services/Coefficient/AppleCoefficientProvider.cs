@@ -3,7 +3,7 @@ using System;
 
 namespace SlotMachine.Core.Services.Coefficient
 {
-    public class AppleCoefficientProvider : SymbolCoefficientProvider
+    internal class AppleCoefficientProvider : SymbolCoefficientProvider
     {
         protected override Type GetSymbolType()
         {

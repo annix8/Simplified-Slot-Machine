@@ -3,7 +3,7 @@ using System;
 
 namespace SlotMachine.Core.Services.Coefficient
 {
-    public class BananaCoefficientProvider : SymbolCoefficientProvider
+    internal class BananaCoefficientProvider : SymbolCoefficientProvider
     {
         protected override Type GetSymbolType()
         {

@@ -2,7 +2,7 @@
 
 namespace SlotMachine.Core.Services.Coefficient.Factory.Contracts
 {
-    public interface ISymbolCoefficientProviderFactory
+    internal interface ISymbolCoefficientProviderFactory
     {
         ISymbolCoefficientProvider Create();
     }

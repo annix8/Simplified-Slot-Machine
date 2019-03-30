@@ -7,7 +7,7 @@ using System;
 
 namespace SlotMachine.Core.Factory
 {
-    public class SimpleSlotMachineFactory : ISimpleSlotMachineFactory
+    internal class SimpleSlotMachineFactory : ISimpleSlotMachineFactory
     {
         public ISimpleSlotMachine Create(Player player)
         {
