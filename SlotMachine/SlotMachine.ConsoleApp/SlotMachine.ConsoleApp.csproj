@@ -44,8 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleGameEngine.cs" />
-    <Compile Include="Factory\Contracts\IGameControllerFactory.cs" />
-    <Compile Include="Factory\GameControllerFactory.cs" />
     <Compile Include="IO\ConsoleReader.cs" />
     <Compile Include="IO\ConsoleWriter.cs" />
     <Compile Include="IO\Contracts\IPlayerInputRequester.cs" />

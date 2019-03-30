@@ -1,5 +1,4 @@
-﻿using SlotMachine.ConsoleApp.Factory.Contracts;
-using SlotMachine.ConsoleApp.IO.Contracts;
+﻿using SlotMachine.ConsoleApp.IO.Contracts;
 using SlotMachine.Core.Contracts;
 using SlotMachine.Core.Models.Dto;
 using SlotMachine.Core.Models.Symbols;
@@ -12,23 +11,33 @@ namespace SlotMachine.ConsoleApp
         private readonly IReader _reader;
         private readonly IWriter _writer;
         private readonly IPlayerInputRequester _playerInputRequester;
-        private readonly IGameControllerFactory _gameControllerFactory;
         private IGameController _gameController;
         private bool _runNewGame = true;
 
         public ConsoleGameEngine(IReader reader,
             IWriter writer,
             IPlayerInputRequester playerInputRequester,
-            IGameControllerFactory gameControllerFactory)
+            IGameController gameController)
         {
             _reader = reader;
             _writer = writer;
             _playerInputRequester = playerInputRequester;
-            _gameControllerFactory = gameControllerFactory;
-            _gameController = CreateGameController();
+            _gameController = gameController;
         }
 
         public void RunGameLoop()
+        {
+            CreateNewGame();
+            PlayGame();
+        }
+
+        private void CreateNewGame()
+        {
+            decimal deposit = _playerInputRequester.RequestPlayerDeposit();
+            _gameController.CreateNewGame(deposit);
+        }
+
+        private void PlayGame()
         {
             while (_runNewGame)
             {
@@ -51,7 +60,8 @@ namespace SlotMachine.ConsoleApp
 
                     if (_runNewGame)
                     {
-                        _gameController = CreateGameController();
+                        decimal deposit = _playerInputRequester.RequestPlayerDeposit();
+                        _gameController.CreateNewGame(deposit);
                     }
                 }
             }
@@ -63,15 +73,6 @@ namespace SlotMachine.ConsoleApp
             {
                 _writer.WriteLine(string.Join(", ", rowOfSymbols));
             }
-        }
-
-        private IGameController CreateGameController()
-        {
-            var gameController = _gameControllerFactory.Create();
-            decimal deposit = _playerInputRequester.RequestPlayerDeposit();
-            gameController.CreateNewGame(deposit);
-
-            return gameController;
         }
     }
 }

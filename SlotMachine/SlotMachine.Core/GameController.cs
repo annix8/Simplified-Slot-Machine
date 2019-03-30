@@ -1,18 +1,22 @@
 ﻿using SlotMachine.Core.Contracts;
+using SlotMachine.Core.Factory.Contracts;
 using SlotMachine.Core.Models;
 using SlotMachine.Core.Models.Dto;
-using SlotMachine.Core.Services;
-using SlotMachine.Core.Services.Coefficient.Factory;
-using System;
 
 namespace SlotMachine.Core
 {
-    public class GameController : IGameController
+    internal class GameController : IGameController
     {
         private const string InsufficientBalanceMessage = "Deposit more money to play. Current balance is {0}.";
 
-        private SimpleSlotMachine _slotMachine;
+        private readonly ISimpleSlotMachineFactory _simpleSlotMachineFactory;
+        private ISimpleSlotMachine _slotMachine;
         private Player _player;
+
+        public GameController(ISimpleSlotMachineFactory simpleSlotMachineFactory)
+        {
+            _simpleSlotMachineFactory = simpleSlotMachineFactory;
+        }
 
         public bool CreateNewGame(decimal playerDeposit)
         {
@@ -25,7 +29,7 @@ namespace SlotMachine.Core
             {
                 Balance = playerDeposit
             };
-            _slotMachine = CreateSlotMachine(_player);
+            _slotMachine = _simpleSlotMachineFactory.Create(_player);
 
             return true;
         }
@@ -55,14 +59,6 @@ namespace SlotMachine.Core
             }
 
             return _player.Balance > 0;
-        }
-
-        private SimpleSlotMachine CreateSlotMachine(Player player)
-        {
-            return new SimpleSlotMachine(
-                player,
-                new RandomSymbolGenerator(new Random()),
-                new SymbolCoefficientProviderFactory());
         }
     }
 }

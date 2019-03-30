@@ -1,4 +1,5 @@
-﻿using SlotMachine.Core.Models;
+﻿using SlotMachine.Core.Contracts;
+using SlotMachine.Core.Models;
 using SlotMachine.Core.Models.Dto;
 using SlotMachine.Core.Models.Symbols;
 using SlotMachine.Core.Services.Coefficient.Contracts;
@@ -8,7 +9,7 @@ using System.Collections.Generic;
 
 namespace SlotMachine.Core
 {
-    internal class SimpleSlotMachine
+    internal class SimpleSlotMachine : ISimpleSlotMachine
     {
         private const int Rows = 4;
         private const int NumberOfSymbolsOnARow = 3;

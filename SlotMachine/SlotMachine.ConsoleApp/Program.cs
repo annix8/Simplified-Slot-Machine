@@ -1,7 +1,7 @@
-﻿using SlotMachine.ConsoleApp.Factory;
-using SlotMachine.ConsoleApp.Factory.Contracts;
-using SlotMachine.ConsoleApp.IO;
+﻿using SlotMachine.ConsoleApp.IO;
 using SlotMachine.ConsoleApp.IO.Contracts;
+using SlotMachine.Core;
+using SlotMachine.Core.Contracts;
 
 namespace SlotMachine.ConsoleApp
 {
@@ -18,9 +18,10 @@ namespace SlotMachine.ConsoleApp
             IReader reader = new ConsoleReader();
             IWriter writer = new ConsoleWriter();
             IPlayerInputRequester playerInputRequester = new PlayerInputRequester(reader, writer);
-            IGameControllerFactory gameControllerFactory = new GameControllerFactory();
+            IGameEngine gameEngine = new GameEngine();
+            IGameController gameController = gameEngine.CreateGameController();
 
-            return new ConsoleGameEngine(reader, writer, playerInputRequester, gameControllerFactory);
+            return new ConsoleGameEngine(reader, writer, playerInputRequester, gameController);
         }
     }
 }
