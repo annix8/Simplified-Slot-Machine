@@ -1,4 +1,5 @@
-﻿using SlotMachine.Core.Models;
+﻿using SlotMachine.Core.Contracts;
+using SlotMachine.Core.Models;
 using SlotMachine.Core.Models.Dto;
 using SlotMachine.Core.Services;
 using SlotMachine.Core.Services.Coefficient.Factory;
@@ -6,7 +7,7 @@ using System;
 
 namespace SlotMachine.Core
 {
-    public class GameController
+    public class GameController : IGameController
     {
         private const string InsufficientBalanceMessage = "Insufficient balance";
 

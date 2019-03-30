@@ -44,11 +44,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleGameEngine.cs" />
+    <Compile Include="Factory\Contracts\IGameControllerFactory.cs" />
+    <Compile Include="Factory\GameControllerFactory.cs" />
     <Compile Include="IO\ConsoleReader.cs" />
     <Compile Include="IO\ConsoleWriter.cs" />
+    <Compile Include="IO\Contracts\IPlayerInputRequester.cs" />
     <Compile Include="IO\Contracts\IReader.cs" />
     <Compile Include="IO\Contracts\IWriter.cs" />
-    <Compile Include="PlayerInputRequester.cs" />
+    <Compile Include="IO\PlayerInputRequester.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,8 +1,8 @@
 ﻿using SlotMachine.ConsoleApp.IO.Contracts;
 
-namespace SlotMachine.ConsoleApp
+namespace SlotMachine.ConsoleApp.IO
 {
-    public class PlayerInputRequester
+    public class PlayerInputRequester : IPlayerInputRequester
     {
         private readonly IReader _reader;
         private readonly IWriter _writer;

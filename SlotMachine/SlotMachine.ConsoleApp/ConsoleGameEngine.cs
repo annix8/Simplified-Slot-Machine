@@ -1,5 +1,6 @@
-﻿using SlotMachine.ConsoleApp.IO.Contracts;
-using SlotMachine.Core;
+﻿using SlotMachine.ConsoleApp.Factory.Contracts;
+using SlotMachine.ConsoleApp.IO.Contracts;
+using SlotMachine.Core.Contracts;
 using SlotMachine.Core.Models.Dto;
 using SlotMachine.Core.Models.Symbols;
 using System.Collections.Generic;
@@ -10,17 +11,20 @@ namespace SlotMachine.ConsoleApp
     {
         private readonly IReader _reader;
         private readonly IWriter _writer;
-        private readonly PlayerInputRequester _playerInputRequester;
-        private GameController _gameController;
+        private readonly IPlayerInputRequester _playerInputRequester;
+        private readonly IGameControllerFactory _gameControllerFactory;
+        private IGameController _gameController;
         private bool _runNewGame = true;
 
         public ConsoleGameEngine(IReader reader,
             IWriter writer,
-            PlayerInputRequester playerInputRequester)
+            IPlayerInputRequester playerInputRequester,
+            IGameControllerFactory gameControllerFactory)
         {
             _reader = reader;
             _writer = writer;
             _playerInputRequester = playerInputRequester;
+            _gameControllerFactory = gameControllerFactory;
             _gameController = CreateGameController();
         }
 
@@ -61,9 +65,9 @@ namespace SlotMachine.ConsoleApp
             }
         }
 
-        private GameController CreateGameController()
+        private IGameController CreateGameController()
         {
-            var gameController = new GameController();
+            var gameController = _gameControllerFactory.Create();
             decimal deposit = _playerInputRequester.RequestPlayerDeposit();
             gameController.CreateNewGame(deposit);
 

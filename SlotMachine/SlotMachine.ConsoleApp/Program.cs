@@ -1,4 +1,7 @@
-﻿using SlotMachine.ConsoleApp.IO;
+﻿using SlotMachine.ConsoleApp.Factory;
+using SlotMachine.ConsoleApp.Factory.Contracts;
+using SlotMachine.ConsoleApp.IO;
+using SlotMachine.ConsoleApp.IO.Contracts;
 
 namespace SlotMachine.ConsoleApp
 {
@@ -12,12 +15,12 @@ namespace SlotMachine.ConsoleApp
 
         private static ConsoleGameEngine CreateConsoleGameEngine()
         {
-            var reader = new ConsoleReader();
-            var writer = new ConsoleWriter();
-            var playerInputRequester = new PlayerInputRequester(reader, writer);
-            var consoleGameEngine = new ConsoleGameEngine(reader, writer, playerInputRequester);
+            IReader reader = new ConsoleReader();
+            IWriter writer = new ConsoleWriter();
+            IPlayerInputRequester playerInputRequester = new PlayerInputRequester(reader, writer);
+            IGameControllerFactory gameControllerFactory = new GameControllerFactory();
 
-            return consoleGameEngine;
+            return new ConsoleGameEngine(reader, writer, playerInputRequester, gameControllerFactory);
         }
     }
 }
