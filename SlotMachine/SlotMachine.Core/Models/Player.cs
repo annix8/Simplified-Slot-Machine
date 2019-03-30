@@ -1,7 +1,14 @@
-﻿namespace SlotMachine.Core.Models
+﻿using System;
+
+namespace SlotMachine.Core.Models
 {
     public class Player
     {
-        public decimal Balance { get; set; }
+        private decimal _balance;
+        public decimal Balance
+        {
+            get => _balance;
+            set => _balance = Math.Round(value, 2);
+        }
     }
 }

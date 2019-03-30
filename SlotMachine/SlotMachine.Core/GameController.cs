@@ -7,7 +7,7 @@ namespace SlotMachine.Core
 {
     internal class GameController : IGameController
     {
-        private const string InsufficientBalanceMessage = "Deposit more money to play. Current balance is {0}.";
+        private const string InsufficientBalanceMessage = "Deposit more money to play. Current balance is {0}";
 
         private readonly ISimpleSlotMachineFactory _simpleSlotMachineFactory;
         private ISimpleSlotMachine _slotMachine;
