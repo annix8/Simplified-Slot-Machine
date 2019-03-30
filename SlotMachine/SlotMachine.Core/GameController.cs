@@ -9,7 +9,7 @@ namespace SlotMachine.Core
 {
     public class GameController : IGameController
     {
-        private const string InsufficientBalanceMessage = "Insufficient balance";
+        private const string InsufficientBalanceMessage = "Deposit more money to play. Current balance is {0}.";
 
         private SimpleSlotMachine _slotMachine;
         private Player _player;
@@ -32,12 +32,12 @@ namespace SlotMachine.Core
 
         public SlotMachineSpinResultDto SpinMachine(decimal stakeAmount)
         {
-            if (_player.Balance <= 0 || _player.Balance < stakeAmount)
+            if (_player == null || _player.Balance <= 0 || _player.Balance < stakeAmount)
             {
                 return new SlotMachineSpinResultDto()
                 {
                     IsSuccess = false,
-                    ResultMessage = InsufficientBalanceMessage
+                    ResultMessage = string.Format(InsufficientBalanceMessage, _player?.Balance)
                 };
             }
 
@@ -49,6 +49,11 @@ namespace SlotMachine.Core
 
         public bool PlayerCanPlay()
         {
+            if(_player == null)
+            {
+                return false;
+            }
+
             return _player.Balance > 0;
         }
 

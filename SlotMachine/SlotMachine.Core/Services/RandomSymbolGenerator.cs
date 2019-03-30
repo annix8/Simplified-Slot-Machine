@@ -1,11 +1,12 @@
 ﻿using SlotMachine.Core.Models.Symbols;
+using SlotMachine.Core.Services.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace SlotMachine.Core.Services
 {
-    public class RandomSymbolGenerator
+    public class RandomSymbolGenerator : IRandomSymbolGenerator
     {
         private const int MinRandomValue = 1;
         private const int MaxRandomValue = 101;

@@ -1,9 +1,9 @@
 ﻿using SlotMachine.Core.Models;
 using SlotMachine.Core.Models.Dto;
 using SlotMachine.Core.Models.Symbols;
-using SlotMachine.Core.Services;
-using SlotMachine.Core.Services.Coefficient;
-using SlotMachine.Core.Services.Coefficient.Factory;
+using SlotMachine.Core.Services.Coefficient.Contracts;
+using SlotMachine.Core.Services.Coefficient.Factory.Contracts;
+using SlotMachine.Core.Services.Contracts;
 using System.Collections.Generic;
 
 namespace SlotMachine.Core
@@ -14,12 +14,12 @@ namespace SlotMachine.Core
         private const int NumberOfSymbolsOnARow = 3;
 
         private readonly Player _player;
-        private readonly RandomSymbolGenerator _randomSymbolGenerator;
-        private readonly SymbolCoefficientProviderFactory _symbolCoefficientProviderFactory;
+        private readonly IRandomSymbolGenerator _randomSymbolGenerator;
+        private readonly ISymbolCoefficientProviderFactory _symbolCoefficientProviderFactory;
 
         public SimpleSlotMachine(Player player,
-            RandomSymbolGenerator randomSymbolGenerator,
-            SymbolCoefficientProviderFactory symbolCoefficientProviderFactory)
+            IRandomSymbolGenerator randomSymbolGenerator,
+            ISymbolCoefficientProviderFactory symbolCoefficientProviderFactory)
         {
             _player = player;
             _randomSymbolGenerator = randomSymbolGenerator;
@@ -30,7 +30,7 @@ namespace SlotMachine.Core
         {
             var rowsOfSymbols = new List<List<Symbol>>();
             double coefficient = 0;
-            SymbolCoefficientProvider symbolCoefficientProvider = _symbolCoefficientProviderFactory.Create();
+            ISymbolCoefficientProvider symbolCoefficientProvider = _symbolCoefficientProviderFactory.Create();
             for (int i = 0; i < Rows; i++)
             {
                 List<Symbol> symbols = _randomSymbolGenerator.Generate(NumberOfSymbolsOnARow);

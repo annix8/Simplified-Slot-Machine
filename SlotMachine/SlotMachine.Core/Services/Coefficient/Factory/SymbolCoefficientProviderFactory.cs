@@ -1,8 +1,11 @@
-﻿namespace SlotMachine.Core.Services.Coefficient.Factory
+﻿using SlotMachine.Core.Services.Coefficient.Contracts;
+using SlotMachine.Core.Services.Coefficient.Factory.Contracts;
+
+namespace SlotMachine.Core.Services.Coefficient.Factory
 {
-    public class SymbolCoefficientProviderFactory
+    public class SymbolCoefficientProviderFactory : ISymbolCoefficientProviderFactory
     {
-        public SymbolCoefficientProvider Create()
+        public ISymbolCoefficientProvider Create()
         {
             var pineappleCoefficientProvider = new PineapleCoefficientProvider();
             var bananaCoefficientProvider = new BananaCoefficientProvider();
